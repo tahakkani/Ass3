@@ -106,15 +106,17 @@ void ListP::sort_mergesort(){
 }
 
 void ListP::sort_quicksort(){
+	head = quicksort(head);
 }
 
 void ListP::partition(ListNode * &Larger, ListNode * &Smaller, ListNode * &pivot ){
-	ListNode *index, *lastSmall, *lastLarge = NULL;
+	ListNode *index = NULL;
+	ListNode *lastSmall = NULL;
+	ListNode *lastLarge = NULL;
 	index = pivot->next;
 	pivot->next = NULL;
-	
-	while(index->next){
-		if(index->item <= pivot->item){
+	while(index){
+		if(index->item < pivot->item){
 			if(Smaller == NULL){
 				Smaller = index;
 				lastSmall = index;
@@ -122,9 +124,9 @@ void ListP::partition(ListNode * &Larger, ListNode * &Smaller, ListNode * &pivot
 			else{
 				lastSmall->next = index;
 				lastSmall = lastSmall->next;
-				index = index->next;
-				lastSmall->next = NULL;
 			}
+			index = index->next;
+			lastSmall->next = NULL;
 		}
 		else{
 			if(Larger == NULL){
@@ -134,14 +136,28 @@ void ListP::partition(ListNode * &Larger, ListNode * &Smaller, ListNode * &pivot
 			else{
 				lastLarge->next = index;
 				lastLarge = lastLarge->next;
-				index = index->next;
-				lastLarge->next = NULL;
 			}
+			index = index->next;
+			lastLarge->next = NULL;
 		}
 	}
 }
 
 ListNode * ListP::quicksort(ListNode *begin){
+	if(begin == NULL || begin->next == NULL)
+		return begin;
+	ListNode *left = NULL;
+	ListNode *right = NULL;
+	partition (right, left, begin);
+	ListNode *lefthead = quicksort(left);
+	begin->next = quicksort(right);
+	
+	if(left == NULL)
+		return begin;
+	else{
+		getTail(lefthead)->next = begin;
+  	return lefthead;
+	}
 }
 
 ListNode * ListP::getTail(ListNode *begin){

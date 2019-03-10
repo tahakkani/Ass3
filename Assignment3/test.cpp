@@ -1,12 +1,11 @@
-
-#include "ListNode.cpp"
-#include "ListP.cpp"
+#include "ListNode.h"
+#include "ListP.h"
 #include <iostream>
 using namespace std;
 
 int main(){
 //testing listNode.h
-	ItemType i[] = {3, 5, 9, 43, 8, 54, 32};
+	ItemType i[] = {2, 3, 7, 43, 8, 33, 32};
 	ListNode n(i[0], NULL);
 	ListNode *nPtr = &n;
 	/*cout << n.getItem();
@@ -19,24 +18,14 @@ int main(){
 //testing ListP.h
 	ListP l;
 //testing insert and display
-	l.insert(1, i[0]);
+	for(int j = 0; j < 7; j++){
+		l.insert(1, i[j]);
+	  l.display();
+	}
+
+//testing sort_quicksort
+	l.sort_quicksort();
 	l.display();
-	l.insert(1, i[1]);
-	l.display();
-	l.insert(3, i[2]);
-	l.display();
-	l.insert(3, i[3]);
-	l.display();
-	l.insert(3, i[4]);
-	l.display();
-	l.insert(3, i[5]);
-	l.display();
-//testing copy constructor
-	l.remove(2);
-	l.display();
-	ListNode *left, *right;
-	l.partition(left, right, l.head);
-	
 	
 	return 0;
 }
